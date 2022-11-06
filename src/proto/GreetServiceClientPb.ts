@@ -17,7 +17,6 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
 import * as src_proto_greet_pb from '../../src/proto/greet_pb';
 
 
@@ -86,16 +85,16 @@ export class GreeterClient {
   methodDescriptorGreetStream = new grpcWeb.MethodDescriptor(
     '/greet.Greeter/GreetStream',
     grpcWeb.MethodType.SERVER_STREAMING,
-    google_protobuf_empty_pb.Empty,
+    src_proto_greet_pb.Empty,
     src_proto_greet_pb.GreetResponseStream,
-    (request: google_protobuf_empty_pb.Empty) => {
+    (request: src_proto_greet_pb.Empty) => {
       return request.serializeBinary();
     },
     src_proto_greet_pb.GreetResponseStream.deserializeBinary
   );
 
   greetStream(
-    request: google_protobuf_empty_pb.Empty,
+    request: src_proto_greet_pb.Empty,
     metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<src_proto_greet_pb.GreetResponseStream> {
     return this.client_.serverStreaming(
       this.hostname_ +

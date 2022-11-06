@@ -1,7 +1,5 @@
 import * as jspb from 'google-protobuf'
 
-import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
-import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
 
 export class Greeting extends jspb.Message {
@@ -64,11 +62,23 @@ export namespace GreetResponse {
   }
 }
 
+export class Empty extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): Empty.AsObject;
+  static toObject(includeInstance: boolean, msg: Empty): Empty.AsObject;
+  static serializeBinaryToWriter(message: Empty, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): Empty;
+  static deserializeBinaryFromReader(message: Empty, reader: jspb.BinaryReader): Empty;
+}
+
+export namespace Empty {
+  export type AsObject = {
+  }
+}
+
 export class GreetResponseStream extends jspb.Message {
-  getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): GreetResponseStream;
-  hasTimestamp(): boolean;
-  clearTimestamp(): GreetResponseStream;
+  getMessage(): string;
+  setMessage(value: string): GreetResponseStream;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GreetResponseStream.AsObject;
@@ -80,7 +90,7 @@ export class GreetResponseStream extends jspb.Message {
 
 export namespace GreetResponseStream {
   export type AsObject = {
-    timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    message: string,
   }
 }
 

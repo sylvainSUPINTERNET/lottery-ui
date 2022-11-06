@@ -4,7 +4,7 @@ import './App.css';
 
 
 import { GreeterClient } from './proto/GreetServiceClientPb';
-import { Greeting, GreetRequest, GreetResponse } from './proto/greet_pb';
+import { Greeting, GreetRequest, GreetResponse, GreetResponseStream, Empty } from './proto/greet_pb';
 import { config } from './config/config.grpc';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
   greeting.setFirstName("John");
   greeting.setLastName("Doe");
   req.setGreeting(greeting);
-  
+
 
   client.greet( req, null, (err:any, response:GreetResponse) => {
     if ( err !== null ) {
@@ -23,6 +23,21 @@ function App() {
     } else {
       console.log(response.toObject().result);
     }
+  });
+
+
+  let greetStreamCall = client.greetStream(new Empty());
+  
+  greetStreamCall.on('end', () => {
+    console.log("stream grpc ended");
+  });
+
+  greetStreamCall.on("error", err => {
+    console.log("stream error grpc", err);
+  });
+
+  greetStreamCall.on("data", ( data:GreetResponseStream ) => {
+    console.log(data.getMessage());
   });
 
   return (
