@@ -89,6 +89,31 @@ GreetServiceClientPb.ts
 ```` 
 
 
+To complete : 
+
+add into the greet_pb.js the following statement : 
+
+```` bash
+
+/* eslint-disable */
+// @ts-nocheck
+
+```` 
+
+OR best way to do it : 
+
+```` bash
+
+touch .eslintignore && echo "src/proto/*.js" > .eslintignore
+
+# Could also add *.ts generated, but protoc already add the disable part in the code generated
+
+````
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

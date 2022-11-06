@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.4.2
 // 	protoc              v0.0.0
-// source: src/protos/greet.proto
+// source: src/proto/greet.proto
 
 
 /* eslint-disable */
@@ -17,7 +17,8 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as src_protos_greet_pb from '../../src/protos/greet_pb';
+import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
+import * as src_proto_greet_pb from '../../src/proto/greet_pb';
 
 
 export class GreeterClient {
@@ -42,29 +43,29 @@ export class GreeterClient {
   methodDescriptorGreet = new grpcWeb.MethodDescriptor(
     '/greet.Greeter/Greet',
     grpcWeb.MethodType.UNARY,
-    src_protos_greet_pb.GreetRequest,
-    src_protos_greet_pb.GreetResponse,
-    (request: src_protos_greet_pb.GreetRequest) => {
+    src_proto_greet_pb.GreetRequest,
+    src_proto_greet_pb.GreetResponse,
+    (request: src_proto_greet_pb.GreetRequest) => {
       return request.serializeBinary();
     },
-    src_protos_greet_pb.GreetResponse.deserializeBinary
+    src_proto_greet_pb.GreetResponse.deserializeBinary
   );
 
   greet(
-    request: src_protos_greet_pb.GreetRequest,
-    metadata: grpcWeb.Metadata | null): Promise<src_protos_greet_pb.GreetResponse>;
+    request: src_proto_greet_pb.GreetRequest,
+    metadata: grpcWeb.Metadata | null): Promise<src_proto_greet_pb.GreetResponse>;
 
   greet(
-    request: src_protos_greet_pb.GreetRequest,
+    request: src_proto_greet_pb.GreetRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: src_protos_greet_pb.GreetResponse) => void): grpcWeb.ClientReadableStream<src_protos_greet_pb.GreetResponse>;
+               response: src_proto_greet_pb.GreetResponse) => void): grpcWeb.ClientReadableStream<src_proto_greet_pb.GreetResponse>;
 
   greet(
-    request: src_protos_greet_pb.GreetRequest,
+    request: src_proto_greet_pb.GreetRequest,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: src_protos_greet_pb.GreetResponse) => void) {
+               response: src_proto_greet_pb.GreetResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -80,6 +81,28 @@ export class GreeterClient {
     request,
     metadata || {},
     this.methodDescriptorGreet);
+  }
+
+  methodDescriptorGreetStream = new grpcWeb.MethodDescriptor(
+    '/greet.Greeter/GreetStream',
+    grpcWeb.MethodType.SERVER_STREAMING,
+    google_protobuf_empty_pb.Empty,
+    src_proto_greet_pb.GreetResponseStream,
+    (request: google_protobuf_empty_pb.Empty) => {
+      return request.serializeBinary();
+    },
+    src_proto_greet_pb.GreetResponseStream.deserializeBinary
+  );
+
+  greetStream(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<src_proto_greet_pb.GreetResponseStream> {
+    return this.client_.serverStreaming(
+      this.hostname_ +
+        '/greet.Greeter/GreetStream',
+      request,
+      metadata || {},
+      this.methodDescriptorGreetStream);
   }
 
 }

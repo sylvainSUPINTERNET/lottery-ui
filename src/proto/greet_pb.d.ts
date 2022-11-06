@@ -1,5 +1,7 @@
 import * as jspb from 'google-protobuf'
 
+import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
+import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
 
 export class Greeting extends jspb.Message {
@@ -59,6 +61,26 @@ export class GreetResponse extends jspb.Message {
 export namespace GreetResponse {
   export type AsObject = {
     result: string,
+  }
+}
+
+export class GreetResponseStream extends jspb.Message {
+  getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): GreetResponseStream;
+  hasTimestamp(): boolean;
+  clearTimestamp(): GreetResponseStream;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GreetResponseStream.AsObject;
+  static toObject(includeInstance: boolean, msg: GreetResponseStream): GreetResponseStream.AsObject;
+  static serializeBinaryToWriter(message: GreetResponseStream, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GreetResponseStream;
+  static deserializeBinaryFromReader(message: GreetResponseStream, reader: jspb.BinaryReader): GreetResponseStream;
+}
+
+export namespace GreetResponseStream {
+  export type AsObject = {
+    timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 }
 
