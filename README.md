@@ -73,6 +73,13 @@ Go to your project root directory, then :
 protoc --js_out=import_style=commonjs,binary:. src/proto/greet.proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:.
 
 
+# Alternative ( osx ) without installing protoc-gen-grpc-web
+
+npm i --save-dev protoc-gen-grpc-web
+
+protoc --js_out=import_style=commonjs,binary:. src/proto/greet.proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:. --plugin=protoc-gen-grpc-web=./node_modules/.bin/protoc-gen-grpc-web
+
+
 ````
 
 
