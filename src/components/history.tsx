@@ -7,49 +7,46 @@ import { config } from '../config/config.grpc';
 
 
 export interface HistoryEvent {
-    winnerNickname: string;
-    itemPrice: string;
-    winAt: number;
-    itemUrl: string;
+    winnernickname: string;
+    itemprice: string;
+    winat: number;
+    itemurl: string;
 }
+
+//https://github.com/cactuaroid/GrpcWpfSample/blob/cd0d87ed6ccccac787960e9742aee036a3dc11eb/GrpcWpfSample.Server/Grpc/ChatServiceGrpcServer.cs#L51
+// https://stackoverflow.com/questions/60116274/grpc-c-sharp-server-side-waiting-until-client-closes-connection
 
 function History () {
     
     const [clientHistory, setClientHistory] = useState<HistorySvcClient>(new HistorySvcClient(config.grpcUrl, null, null));
-    const [historyList, setHistoryList] = useState<any[]>([]);
+    let [historyList, setHistoryList] = useState<any[]>([]);
+
+    let streamHistoryEventsWinCall = clientHistory.historyWinStream(new Empty());
 
     useEffect( () => {
         console.log("Use effect history called");
 
-        let streamHistoryEventsWinCall = clientHistory.historyWinStream(new Empty());
-
         streamHistoryEventsWinCall.on('data', (data: HistoryWinEventResponseStream) => {
             const obj = data.toObject()["historyeventlistList"];
-            console.log("data", obj);
-            setHistoryList([...historyList, ...obj]);
+            setHistoryList([...historyList, ...obj])
         });
-
+    
         streamHistoryEventsWinCall.on('end', () => {
             console.log("end")
         });
-
-            
+                    
     }, []);
 
 
     return ( 
         <div>
             <h1>HISTOREY</h1>
+
+            {
+                historyList.map((item:HistoryEvent, index:number) => <li key={index}>{item.winnernickname}</li>)
+            }
+   
             <Suspense fallback={<div>lOADING ...</div>}>
-                
-                {/*  <Todos data={todos} /> */}
-                {
-                      historyList.length > 0 && historyList.map( (historyEvent: HistoryEvent, index: number) => {
-                        return <div>
-                            <p>{historyEvent.winnerNickname}</p>
-                        </div>
-                    })
-                }
             </Suspense>
         </div>
     )
