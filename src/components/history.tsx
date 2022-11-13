@@ -22,9 +22,11 @@ function History () {
         console.log("Use effect history called");
 
         let streamHistoryEventsWinCall = clientHistory.historyWinStream(new Empty());
-        
+
         streamHistoryEventsWinCall.on('data', (data: HistoryWinEventResponseStream) => {
-            setHistoryList([...historyList, data.getHistoryeventlistList()]);
+            const obj = data.toObject()["historyeventlistList"];
+            console.log("data", obj);
+            setHistoryList([...historyList, ...obj]);
         });
 
         streamHistoryEventsWinCall.on('end', () => {
@@ -39,10 +41,10 @@ function History () {
         <div>
             <h1>HISTOREY</h1>
             <Suspense fallback={<div>lOADING ...</div>}>
-                <p>{JSON.stringify(historyList)}</p>
+                
                 {/*  <Todos data={todos} /> */}
                 {
-                    historyList.map( (historyEvent: HistoryEvent, index: number) => {
+                      historyList.length > 0 && historyList.map( (historyEvent: HistoryEvent, index: number) => {
                         return <div>
                             <p>{historyEvent.winnerNickname}</p>
                         </div>
