@@ -27,6 +27,7 @@ function History () {
         console.log("Use effect history called");
 
         streamHistoryEventsWinCall.on('data', (data: HistoryWinEventResponseStream) => {
+            console.log(data)
             const obj = data.toObject()["historyeventlistList"];
             setHistoryList([...historyList, ...obj])
         });
